@@ -1,4 +1,4 @@
-# Simple Static Site with EC2 Logging (AWS Free Tier Project)
+# Simple Static Site with EC2 Logging (AWS Free Tier Project, UNFINIhED)
 
 This project demonstrates a beginner-friendly AWS architecture using only **Free Tier** services. It hosts a **static website** via **Amazon S3** and uses an **EC2 instance** to generate logs that are uploaded to a separate **S3 bucket**. It’s a great first project after passing the **AWS Certified Cloud Practitioner** (CCP) exam.
 

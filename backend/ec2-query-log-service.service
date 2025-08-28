@@ -1,0 +1,12 @@
+[Unit]
+Description=Run log generation script on boot
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/ec2-user/boto3-instance-query-log.py
+WorkingDirectory=/home/ec2-user
+
+User=ec2-user
+
+[Install]
+WantedBy=multi-user.target

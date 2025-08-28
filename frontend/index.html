@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <title>Ranmarket</title>
+  </head>
+
+  <style>
+    body {
+      position: relative;
+      background-image: url("https://ranmarket-bucket-001.s3.eu-west-2.amazonaws.com/stall.jpg");
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
+      color: black;
+      text-align: center;
+      font-family: sans-serif;
+    }
+
+    /*.soulfire {
+      position: absolute;
+      bottom: 27%;
+      left: 64%;
+      transform: translateX(-50%);
+      width: 100px;
+      pointer-events: none;
+      filter: drop-shadow(0 0 6px rgba(0, 255, 64, 0.4))
+    }
+    */
+
+    .foreground {
+      position: relative;
+      z-index: 1;
+      margin-top: 50px;
+      background: rgb(250, 112, 112, 0.45);
+      padding: 20px;
+      border-radius: 10px;
+      display: inline-block;
+    }
+
+
+
+    button {
+      color: black;
+      background: rgba(255, 239, 20, 0.527);
+      border-radius: 8px;
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  </style>
+
+  <body>
+    <!--<div class="soulfire">
+      <img src="https://ranmarket-bucket-001.s3.eu-west-2.amazonaws.com/soulfire.png"
+        class="soulfire"
+        alt="Soulfire Merchant">
+    </div>
+    -->
+    <div class="foreground">
+      <h1>RANMARKET STALL</h1>
+      <p>Welcome to the Ranmarket, run by Soulfire- where you can add Ranmapoints or spend them!</p>
+
+
+      <button id="add_rmp">+1 RMP</button>
+      <button id="spend_rmp">-1 RMP</button>
+      <p style="background-color: rgba(172, 255, 47, 0.61);" id="rmp_bank">RMP Balance: 0</p>
+
+      <script>
+        const add_rmp = document.getElementById('add_rmp');
+        const spend_rmp = document.getElementById('spend_rmp');
+        const rmp_bank = document.getElementById('rmp_bank')
+
+        add_rmp.addEventListener('click', function () {
+          fetch('http://ranmarket.duckdns.org/increment', {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+          rmp_bank.textContent = 'RMP Balance: '+ data.count;
+        });
+        });
+
+        spend_rmp.addEventListener('click', function () {
+          fetch('http://ranmarket.duckdns.org/decrement', {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+          rmp_bank.textContent = 'RMP Balance: '+ data.count;
+        });
+        });
+      </script>
+    </div>
+  </body>
+
+</html>

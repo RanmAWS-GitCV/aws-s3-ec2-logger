@@ -1,0 +1,31 @@
+import boto3
+
+client = boto3.client('ec2', region_name='eu-west-2')
+
+response = client.describe_instances(
+
+    DryRun=False,
+    Filters=[
+        {
+            'Name': 'tag:AutoShutdown',
+            'Values': [
+                'True',
+            ]
+        },
+    ]
+)
+
+instanceids = []
+
+for reservation in response['Reservations']:
+    for instance in reservation['Instances']:
+        instanceids.append(instance['InstanceId'])
+
+print(instanceids)
+
+response = client.stop_instances(
+    InstanceIds=instanceids,
+    Hibernate=False,
+    DryRun=False,
+    Force=False
+)

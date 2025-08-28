@@ -1,0 +1,12 @@
+import boto3
+from botocore.exceptions import ClientError
+
+bucket_name = "static-site-bucket-19957e7b2819f42c998dd21860fcd7c62"  # Must be globally unique!
+
+region_name='eu-west-2'
+
+# s3 client for us-east-1 (no config block)
+s3 = boto3.client('s3')
+response = s3.delete_bucket(
+        Bucket= bucket_name,
+        ExpectedBucketOwner= str(666091786861))

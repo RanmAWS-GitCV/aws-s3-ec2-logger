@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <title>alice playground</title>
+  </head>
+
+  <body>
+    <h1>welcome to wonderland!</h1>
+    <p>this alice's playground where she trips on wonderful BTLs</p>
+    
+    <button id="growBtn">give alice eat_me BTL</button>
+    <button id="shrinkBtn">give alice drink_me BTL</button>
+    <p id="BTL_count">awaiting consumption...</p>
+
+    <script>
+      const growBtn = document.getElementById('growBtn');
+      const shrinkBtn = document.getElementById('shrinkBtn');
+      const BTL_count = document.getElementById('BTL_count')
+
+      growBtn.addEventListener('click', function () {
+        fetch('http://127.0.0.1:5000/click', {
+          method: 'POST'
+      })
+      .then(response => response.json())
+      .then(data => {
+        BTL_count.textContent = 'alice has eaten! Alice size: 150% BTLs used: '+ data.count;
+      });
+      });
+
+
+      shrinkBtn.addEventListener('click', function () {
+        fetch('http://127.0.0.1:5000/click', {
+          method: 'POST'
+      })
+      .then(response => response.json())
+      .then(data => {
+        BTL_count.textContent = 'alice has drank! Alice size: 50% BTLs used: '+ data.count;
+      });
+      });
+    </script>
+  </body>
+
+</html>

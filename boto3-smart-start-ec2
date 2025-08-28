@@ -1,0 +1,70 @@
+import boto3
+import time
+
+client = boto3.client('ec2', region_name='eu-west-2')
+
+response = client.describe_instances(
+
+    DryRun=False,
+    Filters=[
+        {
+            'Name': 'tag:Project',
+            'Values': [
+                's3-ec2-logger',
+            ]
+        },
+    ]
+)
+
+instanceids = []
+
+for reservation in response['Reservations']:
+    for instance in reservation['Instances']:
+        instanceids.append(instance['InstanceId'])
+
+if instanceids:
+    describe = client.describe_instances(InstanceIds=instanceids)
+    state = describe["Reservations"][0]["Instances"][0]["State"]["Name"]
+    if state!= "running":
+        response = client.start_instances(
+            InstanceIds=instanceids,
+            DryRun=False
+        )
+
+        waiter = client.get_waiter("instance_running")
+        waiter.wait(InstanceIds=instanceids)
+
+    public_ips = []
+
+    for attempt in range (20):
+        response = client.describe_instances(InstanceIds=instanceids)
+        for reservation in response['Reservations']:
+            for instance in reservation['Instances']:
+                ip = instance.get("PublicIpAddress")
+                if ip:
+                    public_ips.append(ip)
+        
+        if not public_ips:
+            print(f"attempt: {attempt} failed\n")
+            print("restart in: 3")
+            time.sleep(1)
+            print("            2")
+            time.sleep(1)
+            print("            1")
+            time.sleep(1)
+        else:
+            print(f"attempt: {attempt}: success")
+            break
+else:
+    print("instance not found")
+    exit()
+
+if not public_ips:
+    print("no public ip found after 1 min")
+    exit()
+else:
+    print("\nInstance Id:\n")
+    print(instanceids)
+    print("\nSSH In:\n")
+    for ip in public_ips:
+        print(f"ssh -i /Users/dalia/Desktop/London-Ranmakey.pem ec2-user@{ip} -o StrictHostKeyChecking=no\n\n")

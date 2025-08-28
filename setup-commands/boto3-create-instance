@@ -1,0 +1,39 @@
+import boto3
+
+client = boto3.client('ec2', region_name='eu-west-2')
+
+response = client.run_instances(
+    BlockDeviceMappings=[
+        {
+            'DeviceName': '/dev/xvda',
+            'Ebs': {
+
+                'DeleteOnTermination': True,
+                'VolumeSize': 8,
+                'VolumeType': 'gp2'
+            },
+        },
+    ],
+    ImageId='ami-0b6ab5dd5da28b19a',
+    InstanceType='t2.micro',
+    MaxCount=1,
+    MinCount=1,
+    KeyName='London-Ranmakey',
+    Monitoring={
+        'Enabled': False
+    },
+    SecurityGroupIds=['sg-0dddc1fcc98151e20',],
+    TagSpecifications=[
+    {    
+        'ResourceType': 'instance',
+        'Tags': [
+            {'Key': 'Name', 'Value': 'Medium-project1-instance'},
+            {'Key': 'Project', 'Value': 's3-ec2-logger'},
+            {'Key': 'Owner', 'Value': 'Ranma'}, 
+            {'Key': 'Purpose', 'Value': 'S3Logging'},
+            {'Key': 'AutoShutdown', 'Value': 'True'} 
+        ]
+    }
+]
+
+)

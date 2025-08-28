@@ -1,0 +1,16 @@
+import boto3
+from botocore.exceptions import ClientError
+
+client = boto3.client('s3')
+
+bucket_name = "ranmarket-bucket-001"  # Must be globally unique!
+file_name = '/Users/dalia/Desktop/aws-s3-ec2-logger/setup-commands/index.html'
+object_name = 'Ranmarket-Static'
+region_name='eu-west-2'
+
+client.upload_file(
+    "/Users/dalia/Desktop/aws-s3-ec2-logger/setup-commands/index.html",
+    "ranmarket-bucket-001",
+    "index.html",
+    ExtraArgs={"ContentType": "text/html"}
+)

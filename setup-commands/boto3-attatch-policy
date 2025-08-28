@@ -1,0 +1,12 @@
+import boto3
+
+client = boto3.client('iam')
+
+response = client.attach_role_policy(
+    RoleName='S3-access-for-Medium-project1-logger',
+    PolicyArn='arn:aws:iam::aws:policy/CloudWatchReadOnlyAccess'
+)
+response = client.attach_role_policy(
+    RoleName='S3-access-for-Medium-project1-logger',
+    PolicyArn='arn:aws:iam::aws:policy/AmazonS3FullAccess'
+)
