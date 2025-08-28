@@ -3,6 +3,10 @@
 This project demonstrates a beginner-friendly AWS architecture using only **Free Tier services**.  
 It combines a static frontend hosted on **Amazon S3** with a **Flask backend on EC2**, logs CPU utilization metrics to another S3 bucket, and integrates with **DuckDNS** + **Nginx** for dynamic backend access.
 
+![Python](https://img.shields.io/badge/python-3.11-blue)
+![Flask](https://img.shields.io/badge/flask-2.3-lightgrey)
+![AWS](https://img.shields.io/badge/AWS-Free%20Tier-orange)
+
 🔗 **Live Demo (Frontend):**  
 http://ranmarket-bucket-001.s3-website.eu-west-2.amazonaws.com/  
 
@@ -31,6 +35,10 @@ http://ranmarket.duckdns.org
 - **IAM:** EC2 instance role with S3 access → enables automated logging.  
 - **Networking:** DuckDNS subdomain + Nginx reverse proxy → stable backend endpoint.  
 - **Region:** eu-west-2 (London).  
+
+---
+
+![Architecture Diagram](./architecture.png)
 
 ---
 
