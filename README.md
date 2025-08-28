@@ -38,7 +38,7 @@ http://ranmarket.duckdns.org
 
 ---
 
-![Architecture Diagram](./architecture.png)
+![Architecture Diagram](./architecture-diagram.png)
 
 ---
 
