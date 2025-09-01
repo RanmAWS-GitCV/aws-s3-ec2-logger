@@ -71,6 +71,24 @@
         const add_rmp = document.getElementById('add_rmp');
         const spend_rmp = document.getElementById('spend_rmp');
         const rmp_bank = document.getElementById('rmp_bank')
+        
+        fetch('http://ranmarket.duckdns.org/balance', {
+            method: 'GET'
+        })
+        .then(response => response.json())
+        .then(data => {
+          rmp_bank.textContent = 'RMP Balance: '+ data.count;
+        });
+
+        window.addEventListener('click', function() {
+          fetch('http://ranmarket.duckdns.org/balance', {
+            method: 'GET'
+        })
+        .then(response => response.json())
+        .then(data => {
+          rmp_bank.textContent = 'RMP Balance: '+ data.count;
+        });
+        });
 
         add_rmp.addEventListener('click', function () {
           fetch('http://ranmarket.duckdns.org/increment', {

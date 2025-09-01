@@ -1,0 +1,32 @@
+import boto3
+
+client = boto3.client('ec2', region_name='eu-west-2')
+
+response = client.describe_instances(
+
+    DryRun=False,
+    Filters=[
+        {
+            'Name': 'tag:AutoShutdown',
+            'Values': [
+                'True',
+            ]
+        },
+    ]
+)
+
+instanceids = []
+
+for reservation in response['Reservations']:
+    for instance in reservation['Instances']:
+        instanceids.append(instance['InstanceId'])
+
+print(instanceids)
+
+if instanceids:
+    response = client.reboot_instances(InstanceIds=instanceids)
+    print("Rebooted:", instanceids)
+    print(response)
+else:
+    print("No instances found to reboot.")
+
