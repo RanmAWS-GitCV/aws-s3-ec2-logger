@@ -18,7 +18,8 @@ http://ranmarket.duckdns.org
 ## Features
 
 - **Static Hosting with S3** – Frontend served directly from an S3 bucket.  
-- **Dynamic Backend (Flask on EC2)** – Handles interactive requests from frontend buttons.  
+- **Dynamic Backend (Flask on EC2)** – Handles interactive requests from frontend buttons.
+- **Persistent Storage with DynamoDB** – EC2 now remembers Ranmapoints (RMP) across restarts, crashes, or updates, ensuring state is never lost.
 - **CloudWatch + Logging** – EC2 queries CloudWatch for its own CPU metrics and pushes results to a dedicated S3 log bucket.  
 - **Automation** – Systemd services ensure scripts and apps run automatically on reboot.  
 - **Domain Management** – DuckDNS keeps the backend domain in sync with EC2’s changing IP.  
@@ -31,7 +32,8 @@ http://ranmarket.duckdns.org
 
 - **Frontend:** `Ranmarket-Bucket-001` → Static website.  
 - **Backend (Compute):** `medium-project1-logger` → EC2 instance running Flask app.  
-- **Logging:** `aws-ec2-logs-bucket-1721a5abc6a5643798dee863f844d744d` → Stores CPU utilization logs.  
+- **Logging:** `aws-ec2-logs-bucket-1721a5abc6a5643798dee863f844d744d` → Stores CPU utilization logs.
+- **Persistence:** DynamoDB table → Stores RMP counts and optionally historical actions.  
 - **IAM:** EC2 instance role with S3 access → enables automated logging.  
 - **Networking:** DuckDNS subdomain + Nginx reverse proxy → stable backend endpoint.  
 - **Region:** eu-west-2 (London).  
